@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>IDELOGY STICKERS — 메인</title>
 <style>
-  :root{--bg:#ffffff;--fg:#111111;--muted:#666;--accent:#ffd66e;--line:#e7e7e7}
+  :root{--bg:#4EFF6A;--fg:#111111;--muted:#444;--accent:#ffd66e;--line:#e7e7e7}
   *{box-sizing:border-box} body{margin:0;font-family:system-ui,Segoe UI,Roboto,Apple SD Gothic Neo,sans-serif;background:var(--bg);color:var(--fg)}
-  header{padding:22px 20px;border-bottom:1px solid var(--line);background:#fff}
-  .brand{max-width:980px;margin:0 auto;font-weight:700;letter-spacing:.4px}
+  header{padding:22px 20px;border-bottom:1px solid var(--line);background:#fff;display:flex;justify-content:center;align-items:center}
+  .logo{height:36px;display:block}
   main{max-width:980px;margin:0 auto;padding:18px 20px}
   .hero{position:relative;aspect-ratio:16/9;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:#fff}
   .slides{position:relative;width:100%;height:100%}
@@ -33,7 +33,9 @@
 </style>
 </head>
 <body>
-  <header><div class="brand">IDELOGY STICKERS</div></header>
+  <header>
+    <img class="logo" src="/images/Group%2013863.png" alt="IDELOGY STICKERS 로고">
+  </header>
 
   <main>
     <section>
@@ -61,14 +63,14 @@
   </main>
 
 <script type="module">
-/* 이미지 링크 모두 동일 */
-const U = "images/vietnam";
-const images = [U,U,U,U];
+/* 이미지 링크 4개 동일 */
+const U="https://images.unsplash.com/photo-1760611052651-51969c2cd347?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1064";
+const images=[U,U,U,U];
 
 /* 캐로셀 */
 const slidesEl=document.getElementById('slides')
 const dotsEl=document.getElementById('dots')
-let idx=0, timer
+let idx=0,timer
 function renderSlides(){
   slidesEl.innerHTML=images.map((src,i)=>`<div class="slide ${i===0?'active':''}"><img src="${src}" alt="활용샷 ${i+1}"></div>`).join('')
   dotsEl.innerHTML=images.map((_,i)=>`<div class="dot ${i===0?'active':''}" data-i="${i}"></div>`).join('')
@@ -76,8 +78,7 @@ function renderSlides(){
 function goto(i){
   const slides=[...document.querySelectorAll('.slide')]
   const dots=[...document.querySelectorAll('.dot')]
-  slides.forEach(s=>s.classList.remove('active'))
-  dots.forEach(d=>d.classList.remove('active'))
+  slides.forEach(s=>s.classList.remove('active')); dots.forEach(d=>d.classList.remove('active'))
   idx=(i+images.length)%images.length
   slides[idx].classList.add('active'); dots[idx].classList.add('active')
 }
@@ -89,11 +90,11 @@ document.getElementById('prev').onclick=()=>{stop();prev();start()}
 dotsEl.addEventListener('click',e=>{ if(e.target.classList.contains('dot')){ stop(); goto(+e.target.dataset.i); start() }})
 document.getElementById('hero').addEventListener('mouseenter',stop)
 document.getElementById('hero').addEventListener('mouseleave',start)
-document.getElementById('thumbs').innerHTML = images.slice(0,6).map(src=>`<img src="${src}" alt="썸네일">`).join('')
+document.getElementById('thumbs').innerHTML=images.slice(0,6).map(src=>`<img src="${src}" alt="썸네일">`).join('')
 
 /* Supabase 폼 */
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
-const supabase = createClient(
+const supabase=createClient(
   'https://nirhksugoncvhmmocqis.supabase.co',
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5pcmhrc3Vnb25jdmhtbW9jcWlzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA5MDI5NTEsImV4cCI6MjA3NjQ3ODk1MX0.aNhtQLnhY1w0Wt_6b9varOJ-KBbN7RHDdame7seC9CE'
 )
