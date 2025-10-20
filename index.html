@@ -5,26 +5,24 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>IDELOGY STICKERS — 메인</title>
 <style>
-  :root{--bg:#4EFF6A;--fg:#111111;--muted:#444;--accent:#ffd66e;--line:#e7e7e7}
+  :root{--bg:#4EFF6A;--fg:#111;--muted:#444;--accent:#ffd66e;--line:#e7e7e7}
   *{box-sizing:border-box}
   body{margin:0;font-family:system-ui,Segoe UI,Roboto,Apple SD Gothic Neo,sans-serif;background:var(--bg);color:var(--fg)}
-  /* 헤더: 중앙 로고 박스 + 큰 크기 */
+
+  /* 헤더: 로고만, 테두리/배경 없음 */
   header{
     padding:28px 20px;
-    background:transparent; /* 좌우 초록(#4EFF6A) 노출 */
+    background:transparent;
+    border:0;
     display:flex;justify-content:center;align-items:center
   }
-  .logo-box{
-    background:#fff;border:1px solid var(--line);border-radius:20px;
-    padding:16px 20px; box-shadow:0 6px 24px rgba(0,0,0,.08)
-  }
-  .logo{height:180px; width:auto; display:block} /* 기존 대비 5배 */
-  /* .logo에 wiggle 클래스를 추가하면 부드러운 움직임 */
-  .logo.wiggle{ animation: wiggle 3s ease-in-out infinite }
-  @keyframes wiggle{ 0%,100%{transform:translateY(0) rotate(0)} 50%{transform:translateY(-2px) rotate(-0.5deg)} }
+  .logo{height:180px;width:auto;display:block}
+  .logo.wiggle{animation:wiggle 3s ease-in-out infinite}
+  @keyframes wiggle{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-2px) rotate(-0.5deg)}}
 
   main{max-width:980px;margin:0 auto;padding:18px 20px}
-  /* hero carousel */
+
+  /* 캐로셀 */
   .hero{position:relative;aspect-ratio:16/9;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:#fff}
   .slides{position:relative;width:100%;height:100%}
   .slide{position:absolute;inset:0;opacity:0;transition:opacity .5s;background:#fafafa}
@@ -36,10 +34,11 @@
   .dot{width:8px;height:8px;border-radius:999px;background:rgba(17,17,17,.25);cursor:pointer}
   .dot.active{background:var(--accent)}
   .hint{margin:10px 2px;color:var(--muted);font-size:.9rem}
-  /* grid thumbs */
+
   .grid{display:grid;gap:10px;grid-template-columns:repeat(3,1fr);margin-top:14px}
   .grid img{width:100%;border-radius:10px;border:1px solid var(--line);aspect-ratio:1/1;object-fit:cover;background:#fff}
-  /* form */
+
+  /* 폼 카드 */
   .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:22px}
   .card h2{margin:.2rem 0 1rem}
   input,textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:12px;margin:8px 0;background:#fff;color:var(--fg);font-size:16px}
@@ -51,10 +50,8 @@
 </head>
 <body>
   <header>
-    <div class="logo-box">
-      <!-- GIF 사용 시 src="/images/logo.gif" 로 교체. 흔들림 효과 원하면 class="logo wiggle" -->
-      <img class="logo" src="/images/Group%2013863.png" alt="IDELOGY STICKERS 로고">
-    </div>
+    <!-- GIF 가능: src="/images/logo.gif" 로 교체해도 됨 -->
+    <img class="logo wiggle" src="/images/Group%2013863.png" alt="IDELOGY STICKERS 로고">
   </header>
 
   <main>
@@ -85,11 +82,11 @@
   </main>
 
 <script type="module">
-/* ---------- 이미지(4장 모두 같은 링크) ---------- */
+/* 이미지(4장 동일 링크) */
 const U="https://images.unsplash.com/photo-1760611052651-51969c2cd347?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1064";
 const images=[U,U,U,U];
 
-/* ---------- 캐로셀 ---------- */
+/* 캐로셀 */
 const slidesEl=document.getElementById('slides')
 const dotsEl=document.getElementById('dots')
 let idx=0,timer
@@ -114,7 +111,7 @@ document.getElementById('hero').addEventListener('mouseenter',stop)
 document.getElementById('hero').addEventListener('mouseleave',start)
 document.getElementById('thumbs').innerHTML=images.slice(0,6).map(src=>`<img src="${src}" alt="썸네일">`).join('')
 
-/* ---------- Supabase 폼 ---------- */
+/* Supabase 폼 */
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 const supabase=createClient(
   'https://nirhksugoncvhmmocqis.supabase.co',
